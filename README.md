@@ -1,13 +1,9 @@
 # Food Ordering Website
-
-
-![Hero](https://i.ibb.co/59cwY75/food-hero.png)
+![image](https://github.com/user-attachments/assets/f68cf53d-baab-4cae-b8b2-37d45cc9449f)
 
 ![Products](https://i.ibb.co/JnNQPyQ/food-products.png)
 
 ![Cart](https://i.ibb.co/t2LrQ8p/food-cart.png)
-
-![Payment](https://private-user-images.githubusercontent.com/141726527/318243171-de526971-c9c7-4235-93b2-dc2690c25b5d.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDI3NTQ2ODIsIm5iZiI6MTc0Mjc1NDM4MiwicGF0aCI6Ii8xNDE3MjY1MjcvMzE4MjQzMTcxLWRlNTI2OTcxLWM5YzctNDIzNS05M2IyLWRjMjY5MGMyNWI1ZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwMzIzJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDMyM1QxODI2MjJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kNzkzYjI0NzA0ZjU2ZmU5MTRmYzk2Yzg4YmE5MDRlZTRkOWNlM2QwZDhmZWM3NTE1YWM2OGIwNDIzOTA2ZGMyJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.oDqZgf7bhBXdzMpYIF1q7bQD4R_i256HtWihIgY9GQE)
 
 
 ## Run Locally
