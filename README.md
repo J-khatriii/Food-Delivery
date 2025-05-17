@@ -1,11 +1,10 @@
 # Food Ordering Website
-![image](https://github.com/user-attachments/assets/f68cf53d-baab-4cae-b8b2-37d45cc9449f)
 
-![Products](https://i.ibb.co/JnNQPyQ/food-products.png)
-
-![Cart](https://i.ibb.co/t2LrQ8p/food-cart.png)
-
-
+![home](./screenshots/home.png)
+![menu](./screenshots/menu.png)
+![cart](./screenshots/cart.png)
+![payment](./screenshots/payment.png)
+![admin](./screenshots/admin.png)
 ## Run Locally
 
 Clone the project
@@ -40,7 +39,6 @@ Setup Environment Vaiables
 
 ```Make .env file in "backend" folder and store environment Variables
   JWT_SECRET=YOUR_SECRET_TEXT
-  SALT=YOUR_SALT_VALUE
   MONGO_URL=YOUR_DATABASE_URL
   STRIPE_SECRET_KEY=YOUR_KEY
  ```
@@ -55,16 +53,11 @@ Setup the Frontend and Backend URL
   - orderController in Backend folder
       const frontend_url = YOUR_FRONTEND_URL 
 
-Start the Backend server
-
-```bash
-    nodemon server.js
-```
 
 Start the Frontend server
 
 ```bash
-    npm start
+    npm run dev
 ```
 
 Start the Backend server
