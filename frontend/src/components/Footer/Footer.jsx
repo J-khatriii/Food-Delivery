@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-content-left">
             <img src={assets.logo} alt="" />
             <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error doloribus harum officia saepe alias, amet iure fugiat nam temporibus, sunt, nihil excepturi neque assumenda repellat nesciunt veritatis rem eos consequatur.
+              Tomato is your go-to destination for delicious meals delivered straight to your door. Explore our wide variety of cuisines and enjoy fresh, high-quality food prepared with love and care. Your cravings, our mission!
             </p>
             <div className="footer-social-icons">
                 <img src={assets.facebook_icon} alt="" />
