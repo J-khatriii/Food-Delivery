@@ -13,7 +13,16 @@ const port = process.env.PORT || 4000
 
 // middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors(
+    cors({
+    origin: [
+      "https://food-delivery-frontend-aprj.onrender.com",  // Deployed frontend
+      "http://localhost:5173" // For local development
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+))
 
 //db connection
 connectDB();
