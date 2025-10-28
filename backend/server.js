@@ -12,7 +12,8 @@ const app = express()
 const port = process.env.PORT || 4000
 
 // middleware
-app.use(express.json())
+app.use(express.json({ limit: '10mb' }))  // Add size limit
+app.use(express.urlencoded({ extended: true, limit: '10mb' }))  // Add size limit
 app.use(cors({
   origin: [
     "https://food-delivery-frontend-aprj.onrender.com",
