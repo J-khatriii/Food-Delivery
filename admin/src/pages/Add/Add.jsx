@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import './Add.css';
-import { assets } from '../../assets/assets';
+import { useState } from "react";
+import "./Add.css";
+import { assets } from "../../assets/assets";
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
-const Add = ({url}) => {
+const Add = ({ url }) => {
   const [image, setImage] = useState(null); // Changed initial state to null
 
   const [data, setData] = useState({
@@ -17,7 +17,7 @@ const Add = ({url}) => {
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setData(data => ({ ...data, [name]: value }));
+    setData((data) => ({ ...data, [name]: value }));
   }
 
   const onSubmitHandler = async (event) => {
@@ -37,14 +37,14 @@ const Add = ({url}) => {
     formData.append("image", image);
 
     try {
-      // Send data at the endpoint 
+      // Send data at the endpoint
       const response = await axios.post(`${url}/api/food/add`, formData);
       if (response.data.success) {
         setData({
           name: "",
           description: "",
           price: "",
-          category: "Salad"
+          category: "Salad",
         });
         setImage(null); // Reset image state
         toast.success(response.data.message);
@@ -57,23 +57,50 @@ const Add = ({url}) => {
   }
 
   return (
-    <div className='add'>
-      <form className='flex-col' onSubmit={onSubmitHandler}>
+    <div className="add">
+      <form className="flex-col" onSubmit={onSubmitHandler}>
         <div className="add-image-upload flex-col">
           <p>Upload Image</p>
           <label htmlFor="image">
-            <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
+            <img
+              src={image ? URL.createObjectURL(image) : assets.upload_area}
+              alt=""
+            />
           </label>
-          <input onChange={(e) => setImage(e.target.files[0])} type="file" id='image' hidden required />
+          <input
+            onChange={(e) => setImage(e.target.files[0])}
+            type="file"
+            id="image"
+            hidden
+            required
+          />
         </div>
+
         <div className="add-product-name flex-col">
           <p>Product Name</p>
-          <input onChange={onChangeHandler} value={data.name} type="text" name='name' placeholder='type here' required />
+          <input
+            onChange={onChangeHandler}
+            value={data.name}
+            type="text"
+            name="name"
+            placeholder="type here"
+            required
+          />
         </div>
+
         <div className="add-product-description flex-col">
           <p>Product Description</p>
-          <textarea onChange={onChangeHandler} value={data.description} name="description" id="" rows="6" placeholder='Write Content here' required></textarea>
+          <textarea
+            onChange={onChangeHandler}
+            value={data.description}
+            name="description"
+            id=""
+            rows="6"
+            placeholder="Write Content here"
+            required
+          ></textarea>
         </div>
+
         <div className="add-category-price">
           <div className="add-category flex-col">
             <p>Product Category</p>
@@ -88,12 +115,25 @@ const Add = ({url}) => {
               <option value="Noodles">Noodles</option>
             </select>
           </div>
+
           <div className="add-price flex-col">
             <p>Product Price</p>
-            <input onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='$20' required />
+            <input
+              onChange={onChangeHandler}
+              value={data.price}
+              type="number"
+              name="price"
+              placeholder="$20"
+              required
+            />
           </div>
+
         </div>
-        <button type='submit' className='add-button'>Add</button>
+
+        <button type="submit" className="add-button">
+          Add
+        </button>
+
       </form>
     </div>
   );

@@ -1,24 +1,29 @@
-import express from "express"
-import cors from "cors"
-import { connectDB } from "./config/db.js"
-import foodRouter from "./routes/foodRoute.js"
-import userRouter from "./routes/userRoute.js"
-import 'dotenv/config'
-import cartRouter from "./routes/cartRoute.js"
-import orderRouter from "./routes/orderRoute.js"
+import express from "express";
+import cors from "cors";
+import "dotenv/config";
+
+import { connectDB } from "./config/db.js";
+
+import foodRouter from "./routes/foodRoute.js";
+import userRouter from "./routes/userRoute.js";
+import cartRouter from "./routes/cartRoute.js";
+import orderRouter from "./routes/orderRoute.js";
 
 // app confing
-const app = express()
-const port = process.env.PORT || 4000
+const app = express();
+const port = process.env.PORT || 4000;
 
 // middleware
-app.use(express.json({ limit: '10mb' }))  // Add size limit
-app.use(express.urlencoded({ extended: true, limit: '10mb' }))  // Add size limit
+app.use(express.json({ limit: "10mb" }));  // Add size limit
+
+app.use(express.urlencoded({ extended: true, limit: "10mb" }))  // Add size limit
+
 app.use(cors({
   origin: [
     "https://food-delivery-frontend-aprj.onrender.com",
     "http://localhost:5173",
   ],
+
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "token"],
 }));
@@ -29,18 +34,16 @@ app.options("*", cors());
 connectDB();
 
 //api endpoint
-app.use("/api/food",foodRouter);
-app.use("/images",express.static('uploads'));
-app.use("/api/user",userRouter)
-app.use("/api/cart",cartRouter)
-app.use("/api/order",orderRouter)
+app.use("/api/food", foodRouter);
+app.use("/images", express.static("uploads"));
+app.use("/api/user", userRouter);
+app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
-app.get("/",(request,response)=>{
-    response.send("API Working")
-})
+app.get("/", (request, response) => {
+  response.send("API Working");
+});
 
-app.listen(port,()=>{
-    console.log(`Server Started on http://localhost:${port}`)
-})
-
-//mongodb+srv://jaswantkhatri:it'sjkhere@cluster0.vwfgs.mongodb.net/?
+app.listen(port, () => {
+  console.log(`Server Started on http://localhost:${port}`)
+});

@@ -1,16 +1,36 @@
-import React, { useContext, useState } from 'react'
-import './Cart.css'
-import { StoreContext } from '../../context/StoreContext'
-import { useNavigate } from 'react-router-dom';
+import { useContext } from "react";
+import "./Cart.css";
+import { StoreContext } from "../../context/StoreContext";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-
-  const {cartItems,food_list,removeFromCart,getTotalCartAmount,url} = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart, getTotalCartAmount, url } = useContext(StoreContext);
 
   const navigate = useNavigate();
 
+  const getCartImageUrl = (imageName) => {
+    if (!imageName) return "/images/parcel_icon.png";
+
+    const normalizedImage =
+      typeof imageName === "string" && !imageName.includes(".")
+        ? `${imageName}.png`
+        : imageName;
+
+    if (normalizedImage.startsWith("http")) return normalizedImage;
+    if (normalizedImage.startsWith("/")) return normalizedImage;
+
+    if (
+      /^(food_|menu_|header_|logo|app_store|play_store|rating_starts)/i.test(
+        normalizedImage,
+      )
+    ) {
+      return `/images/${normalizedImage}`;
+    }
+    return `${url}/images/${normalizedImage}`;
+  }
+
   return (
-    <div className='cart'>
+    <div className="cart">
       <div className="cart-items">
         <div className="cart-items-title">
           <p>Items</p>
@@ -20,28 +40,28 @@ const Cart = () => {
           <p>Total</p>
           <p>Remove</p>
         </div>
-        <br/>
-        <hr/>
-        {food_list.map((item,index)=>{
-          if(cartItems[item._id]>0)
-          {
-            return (
+        <br />
+        <hr />
 
-              <div key={item._id}>
+        {food_list.map((item, index) => {
+          const itemKey = String(item._id ?? item.name ?? "");
+          if ((cartItems[itemKey] ?? 0) > 0) {
+            return (
+              <div key={itemKey}>
                 <div className="cart-items-title cart-items-item">
-                <img src={url+"/images/"+item.image} alt="" />
-                <p>{item.name}</p>
-                <p>${item.price}</p>
-                <p>{cartItems[item._id]}</p>
-                <p>${item.price*cartItems[item._id]}</p>
-                <p className='cross' onClick={()=>removeFromCart(item._id)}>X</p>
-              </div> 
-              <hr/>
+                  <img src={getCartImageUrl(item.image)} alt={item.name} />
+                  <p>{item.name}</p>
+                  <p>${item.price}</p>
+                  <p>{cartItems[itemKey]}</p>
+                  <p>${item.price * cartItems[itemKey]}</p>
+                  <p className="cross" onClick={() => removeFromCart(itemKey)}>
+                    X
+                  </p>
+                </div>
+                <hr />
               </div>
-                    
-            
-              )
-            }
+            );
+          }
         })}
       </div>
 
@@ -53,33 +73,36 @@ const Cart = () => {
               <p>Sub Total</p>
               <p>${getTotalCartAmount()}</p>
             </div>
-            <hr/>
+            <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>${getTotalCartAmount()===0?0:2}</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
-            <hr/>
+            <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>${getTotalCartAmount()===0?0:getTotalCartAmount()+2}</b>
+              <b>
+                ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}
+              </b>
             </div>
           </div>
-          <button onClick={()=>navigate('/order')}>Proceed To Checkout</button>
+          <button onClick={() => navigate("/order")}>
+            Proceed To Checkout
+          </button>
         </div>
 
         <div className="cart-promocode">
           <div className="">
             <p>If you have a promocode. Enter it here</p>
             <div className="cart-promocode-input">
-              <input type="text" placeholder='promocode' />
+              <input type="text" placeholder="promocode" />
               <button>APPLY</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-
-export default Cart
+export default Cart;

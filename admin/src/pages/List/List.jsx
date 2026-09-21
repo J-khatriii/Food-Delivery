@@ -1,47 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import './List.css'
-import axios from "axios"
-import { ToastContainer, toast } from 'react-toastify';
+import { useEffect, useState } from "react";
+import "./List.css";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const List = ({url}) => {
-
+const List = ({ url }) => {
   // const url = 'http://localhost:4000'
 
-  const [list,setList] = useState([]);
-  
-  const fetchList = async()=>{
+  const [list, setList] = useState([]);
+
+  const fetchList = async () => {
     const response = await axios.get(`${url}/api/food/list`);
-    console.log(response.data)
-    if(response.data.success){
-      setList(response.data.data)
-    }
-    else{
+    console.log(response.data);
+    if (response.data.success) {
+      setList(response.data.data);
+    } else {
       //error
       // toast.error("Error");
     }
   }
 
-  const removeFood = async (foodId)=>{
+  const removeFood = async (foodId) => {
     //console.log(foodId)
-    const response = await axios.post(`${url}/api/food/remove`,{id:foodId});
+    const response = await axios.post(`${url}/api/food/remove`, { id: foodId });
 
     await fetchList();
-    if(response.data.success){
-      toast.success(response.data.message)
-    }
-    else{
-      toast.error('Error')
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } else {
+      toast.error("Error");
     }
   }
 
-  useEffect(()=>{
-     fetchList();
-  },[])
+  useEffect(() => {
+    fetchList();
+  }, []);
 
   return (
-    <div className='list add flex-col'>
+    <div className="list add flex-col">
       <p>All food list</p>
+
       <div className="list-table">
+
         <div className="list-table-format title">
           <b>Image</b>
           <b>Name</b>
@@ -49,20 +48,23 @@ const List = ({url}) => {
           <b>Price</b>
           <b>Action</b>
         </div>
-        {list.map((item,index)=>{
-          return(
+
+        {list.map((item, index) => {
+          return (
             <div className="list-table-format" key={index}>
-              <img src={`${url}/images/`+item.image} alt="" />
+              <img src={`${url}/images/` + item.image} alt="" />
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>${item.price}</p>
-              <p className='cursor' onClick={()=>removeFood(item._id)}>X</p>
+              <p className="cursor" onClick={() => removeFood(item._id)}>
+                X
+              </p>
             </div>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
-export default List
+export default List;
