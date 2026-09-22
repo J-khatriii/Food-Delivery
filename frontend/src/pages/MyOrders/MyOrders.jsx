@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import "./MyOrders.css";
@@ -8,6 +9,7 @@ import { assets } from "../../assets/assets";
 const MyOrders = () => {
   const { url, token } = useContext(StoreContext);
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   const fetchOrders = async () => {
     try {
@@ -52,39 +54,51 @@ const MyOrders = () => {
 
   return (
     <div className="my-orders">
-      <h2 className="myorders">My Orders</h2>\
+      <h2 className="myorders">My Orders</h2>
 
       <div className="container">
-        {(Array.isArray(data) ? data : []).map((order, index) => {
-          const items = Array.isArray(order?.items) ? order.items : [];
-          const firstItemImage = items[0]?.image;
-          const orderImage = getImageUrl(firstItemImage);
+        {data.length === 0 ? (
+          <div className="my-orders-empty">
+            <h3>No orders yet</h3>
+            <p>
+              Looks like you haven’t placed an order yet. Ready to find something delicious?
+            </p>
+            <button className="my-orders-menu-btn" onClick={() => navigate("/")}>
+              Go to Menu
+            </button>
+          </div>
+        ) : (
+          (Array.isArray(data) ? data : []).map((order, index) => {
+            const items = Array.isArray(order?.items) ? order.items : [];
+            const firstItemImage = items[0]?.image;
+            const orderImage = getImageUrl(firstItemImage);
 
-          return (
-            <div key={order?._id || index} className="my-orders-order">
-              <img src={orderImage} alt={items[0]?.name || "Order item"} />
+            return (
+              <div key={order?._id || index} className="my-orders-order">
+                <img src={orderImage} alt={items[0]?.name || "Order item"} />
 
-              <p>
-                {items.map((item, index) => {
-                  if (index === items.length - 1) {
-                    return item.name + " x " + item.quantity;
-                  } else {
-                    return item.name + " x " + item.quantity + ",";
-                  }
-                })}
-              </p>
+                <p>
+                  {items.map((item, index) => {
+                    if (index === items.length - 1) {
+                      return item.name + " x " + item.quantity;
+                    } else {
+                      return item.name + " x " + item.quantity + ",";
+                    }
+                  })}
+                </p>
 
-              <p>${order?.amount ?? 0}.00</p>
-              <p>Items: {items.length}</p>
+                <p>${order?.amount ?? 0}.00</p>
+                <p>Items: {items.length}</p>
 
-              <p>
-                <span>&#x25cf;</span> <b>{order?.status || "pending"}</b>
-              </p>
-              
-              <button onClick={fetchOrders}>Track Order</button>
-            </div>
-          );
-        })}
+                <p>
+                  <span>&#x25cf;</span> <b>{order?.status || "pending"}</b>
+                </p>
+
+                <button onClick={fetchOrders}>Track Order</button>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

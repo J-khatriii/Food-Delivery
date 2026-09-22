@@ -2,7 +2,8 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
-const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
+const stripeKey = process.env.STRIPE_SECRET_KEY || "";
+const stripe = stripeKey.startsWith("sk_") ? new Stripe(stripeKey) : null;
 
 //placing user order from fronted
 const placeOrder = async (req, res) => {
@@ -10,6 +11,7 @@ const placeOrder = async (req, res) => {
 
     try {
         if (!stripe) {
+            console.log("Stripe key missing or invalid. Value present:", Boolean(stripeKey), "Prefix:", stripeKey.slice(0, 6));
             return res.status(500).json({
                 success: false,
                 message: "Payment is not configured on the server. Add STRIPE_SECRET_KEY in the backend environment."
@@ -64,8 +66,9 @@ const placeOrder = async (req, res) => {
 
         res.json({ success: true, session_url: session.url });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false, message: error.message || "Error" });
+        console.log("Stripe checkout error:", error?.type, error?.message);
+        console.log("Stripe raw error:", error?.raw || error);
+        res.status(500).json({ success: false, message: error?.message || "Error" });
     }
 }
 
@@ -98,7 +101,6 @@ const usersOrders = async (req, res) => {
 }
 
 //Listings of all orders for admin
-
 const listOrders = async (req, res) => {
     try {
         const orders = await orderModel.find({});

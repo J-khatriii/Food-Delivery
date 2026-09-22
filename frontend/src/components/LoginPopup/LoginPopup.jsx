@@ -40,7 +40,7 @@ const LoginPopup = ({ setShowLogin }) => {
     try {
       console.log("Sending data:", data); // Log form data
       console.log("API URL:", newUrl); // Log constructed URL
-      if (validateResponse) {
+      if (validateResponse(response)) {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         setShowLogin(false);
