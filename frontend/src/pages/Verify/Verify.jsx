@@ -10,7 +10,7 @@ const Verify = () => {
   const success = searchParams.get("success");
   const orderId = searchParams.get("orderId");
 
-  const { url } = useContext(StoreContext);
+  const { url, setCartItems } = useContext(StoreContext);
   const navigate = useNavigate();
 
   const verifyPayment = async () => {
@@ -18,7 +18,10 @@ const Verify = () => {
       success,
       orderId,
     });
+
     if (response.data.success) {
+      setCartItems({});
+      localStorage.setItem("cartItems", JSON.stringify({}));
       navigate("/myorders");
     } else {
       navigate("/");

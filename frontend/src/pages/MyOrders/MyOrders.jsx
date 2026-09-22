@@ -5,13 +5,23 @@ import axios from "axios";
 import "./MyOrders.css";
 import { StoreContext } from "../../context/StoreContext";
 import { assets } from "../../assets/assets";
+import Loading from "../../components/Loading/Loading";
 
 const MyOrders = () => {
   const { url, token } = useContext(StoreContext);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const fetchOrders = async () => {
+    if (!token) {
+      setData([]);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+
     try {
       const response = await axios.post(
         url + "/api/order/userorders",
@@ -22,6 +32,8 @@ const MyOrders = () => {
     } catch (error) {
       console.error("Error fetching orders:", error);
       setData([]);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -57,7 +69,9 @@ const MyOrders = () => {
       <h2 className="myorders">My Orders</h2>
 
       <div className="container">
-        {data.length === 0 ? (
+        {loading ? (
+          <Loading text="Loading your orders..." />
+        ) : data.length === 0 ? (
           <div className="my-orders-empty">
             <h3>No orders yet</h3>
             <p>
