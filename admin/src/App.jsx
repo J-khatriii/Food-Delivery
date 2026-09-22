@@ -8,7 +8,10 @@ import List from "./pages/List/List.jsx";
 import Orders from "./pages/Orders/Orders.jsx";
 
 const App = () => {
-  const url = "http://localhost:4000";
+  const url =
+    window.location.hostname === "localhost"
+      ? "http://localhost:4000"
+      : "https://food-delivery-backend-v8xs.onrender.com";
 
   return (
     <div>

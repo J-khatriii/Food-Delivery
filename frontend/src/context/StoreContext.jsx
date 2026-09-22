@@ -88,6 +88,24 @@ const StoreContextProvider = (props) => {
     setFoodList(response.data.data);
   }
 
+  const loadUserProfile = async (activeToken) => {
+    try {
+      const response = await axios.post(
+        url + "/api/user/me",
+        {},
+        { headers: { token: activeToken } },
+      );
+
+      if (response?.data?.success && response?.data?.name) {
+        const nextName = response.data.name;
+        setUserName(nextName);
+        localStorage.setItem("userName", nextName);
+      }
+    } catch (error) {
+      console.error("Load user profile error:", error);
+    }
+  }
+
   const loadCartData = async (token) => {
     try {
       const response = await axios.post(
@@ -127,9 +145,11 @@ const StoreContextProvider = (props) => {
     if (!token) {
       const savedCart = localStorage.getItem("cartItems");
       setCartItems(savedCart ? JSON.parse(savedCart) : {});
+      setUserName(localStorage.getItem("userName") || "");
       return;
     }
 
+    loadUserProfile(token);
     loadCartData(token);
   }, [token]);
 

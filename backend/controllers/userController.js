@@ -32,6 +32,21 @@ const createToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET);
 }
 
+const getUserProfile = async (req, res) => {
+    try {
+        const user = await userModel.findById(req.body.userId).select("name email");
+
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        return res.json({ success: true, name: user.name, email: user.email });
+    } catch (error) {
+        console.log(error);
+        return res.json({ success: false, message: "Error" });
+    }
+}
+
 //register user
 const registerUser = async (req, res) => {
     const { name, password, email } = req.body;
@@ -76,4 +91,4 @@ const registerUser = async (req, res) => {
     }
 }
 
-export { loginUser, registerUser };
+export { loginUser, registerUser, getUserProfile };
