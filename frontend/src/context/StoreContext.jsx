@@ -14,7 +14,8 @@ const StoreContextProvider = (props) => {
     }
   });
 
-  const url = "https://food-delivery-backend-v8xs.onrender.com";
+  const url = import.meta.env.VITE_API_URL || "http://localhost:4000";
+  
   const [token, setToken] = useState(() => localStorage.getItem("token") || "");
   const [userName, setUserName] = useState(() => localStorage.getItem("userName") || "");
 

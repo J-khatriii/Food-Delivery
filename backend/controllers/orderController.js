@@ -7,7 +7,7 @@ const stripe = stripeKey.startsWith("sk_") ? new Stripe(stripeKey) : null;
 
 //placing user order from fronted
 const placeOrder = async (req, res) => {
-    const frontend_url = process.env.FRONTEND_URL || 'https://food-delivery-frontend-aprj.onrender.com';
+    const frontend_url = process.env.FRONTEND_URL || "http://localhost:5173";
 
     try {
         if (!stripe) {

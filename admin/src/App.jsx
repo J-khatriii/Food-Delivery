@@ -8,10 +8,7 @@ import List from "./pages/List/List.jsx";
 import Orders from "./pages/Orders/Orders.jsx";
 
 const App = () => {
-  const url =
-    window.location.hostname === "localhost"
-      ? "http://localhost:4000"
-      : "https://food-delivery-backend-v8xs.onrender.com";
+  const url = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
   return (
     <div>

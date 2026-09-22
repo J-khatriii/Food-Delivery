@@ -62,7 +62,7 @@ const Orders = ({ url }) => {
                     ", " +
                     order.address.country +
                     ", " +
-                    order.address.zipcode}
+                    order.address.zipCode}
                 </p>
               </div>
 
