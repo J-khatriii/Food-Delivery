@@ -5,7 +5,7 @@ import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 
 const LoginPopup = ({ setShowLogin }) => {
-  const { url, setToken } = useContext(StoreContext);
+  const { url, setToken, setUserName } = useContext(StoreContext);
 
   const [currentState, setCurrentState] = useState("Login");
 
@@ -41,8 +41,11 @@ const LoginPopup = ({ setShowLogin }) => {
       console.log("Sending data:", data); // Log form data
       console.log("API URL:", newUrl); // Log constructed URL
       if (validateResponse(response)) {
+        const nextUserName = response.data.name || data.name || "User";
         setToken(response.data.token);
+        setUserName(nextUserName);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", nextUserName);
         setShowLogin(false);
       } else {
         alert(response.data.message || "An error occurred. Please try again.");

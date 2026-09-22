@@ -16,6 +16,7 @@ const StoreContextProvider = (props) => {
 
   const url = "https://food-delivery-backend-v8xs.onrender.com";
   const [token, setToken] = useState(() => localStorage.getItem("token") || "");
+  const [userName, setUserName] = useState(() => localStorage.getItem("userName") || "");
 
   const [food_list, setFoodList] = useState([]);
 
@@ -142,6 +143,8 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    userName,
+    setUserName,
   }
 
   return (
